@@ -11,4 +11,5 @@ task main()
 	displayTextLine(3,"%d",getGyroDegrees(G));
 	displayTextLine(4,"%d",getBumperValue(B));
 
+}}
 }
