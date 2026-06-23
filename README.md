@@ -177,23 +177,11 @@ This program displays several sensor values on the VEX IQ Brain screen: grayscal
 
 Use this when wiring or calibrating sensors. It helps check whether the Brain is reading the sensors correctly.
 
-### `sensors/telemetry/color-distance-gyro-bumper-debug.c`
-
-This is another sensor debug display. It reads the same basic sensor group: color/grayscale, distance, gyro, and bumper.
-
-Use it as a telemetry/debug version of the multi-sensor readout.
-
 ### `sensors/grayline-counting-by-threshold.c`
 
 This program uses a grayscale sensor and two drive motors. It keeps a counter, drives forward, and increments the counter when the grayscale value crosses the threshold logic.
 
 Use this to count gray/dark line events while the robot moves.
-
-### `misc/blank-template.c`
-
-This is an empty RobotC `task main()` file.
-
-Use it as a clean starting point for a new RobotC program.
 
 ### `misc/countdown-and-accel-demo.c`
 
@@ -388,23 +376,11 @@ This repository uses the MIT License. See [`LICENSE`](./LICENSE).
 
 适合接线和校准时用来确认传感器有没有读到数据。
 
-### `sensors/telemetry/color-distance-gyro-bumper-debug.c`
-
-这是另一个传感器调试显示程序，读取同样的几类传感器：颜色/灰度、距离、陀螺仪和 bumper。
-
-可以当作 telemetry 版本的多传感器读数显示。
-
 ### `sensors/grayline-counting-by-threshold.c`
 
 这个程序使用灰度传感器和两个驱动电机。它会显示一个计数，机器人前进时根据灰度阈值逻辑增加计数。
 
 适合统计机器人经过灰线/深色线的次数。
-
-### `misc/blank-template.c`
-
-这是一个空白的 RobotC `task main()` 文件。
-
-适合当作新程序起点。
 
 ### `misc/countdown-and-accel-demo.c`
 
