@@ -84,11 +84,6 @@ It is organized by behavior type so each file is easy to find for learning, refa
 
 This repository is released under the MIT License. See [`LICENSE`](./LICENSE).
 
-### Author note
-
-All code in this repository is my own and for learning, practice, and competition prototyping.
-
----
 
 ## 中文
 
@@ -172,6 +167,3 @@ All code in this repository is my own and for learning, practice, and competitio
 
 本仓库使用 MIT 协议。详见 [`LICENSE`](./LICENSE)。
 
-### 作者说明
-
-本仓库全部代码为本人编写，用于学习、课程实践和比赛原型开发。
