@@ -167,3 +167,7 @@ This repository is released under the MIT License. See [`LICENSE`](./LICENSE).
 
 本仓库使用 MIT 协议。详见 [`LICENSE`](./LICENSE)。
 
+
+### Local files not yet in repository (mapped to current naming)
+- `vexiq_drive_encoder_loop.c` -> `motion/encoder-loop-forward.c`
+- `vexiq_drive_eight_shape_pattern.c` -> `motion/eight-shape-pattern.c`
