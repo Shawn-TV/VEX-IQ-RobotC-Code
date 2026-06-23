@@ -1,5 +1,5 @@
 #pragma config(Sensor, port2,  G,              sensorVexIQ_Gyro)
-#pragma config(Sensor, port3,  ,               sensorVexIQ_LED)
+#pragma config(Sensor, port3,  LED,            sensorVexIQ_LED)
 #pragma config(Sensor, port5,  L,              sensorVexIQ_LED)
 #pragma config(Sensor, port6,  T,              sensorVexIQ_LED)
 #pragma config(Motor,  motor1,          L,             tmotorVexIQ, PIDControl, encoder)

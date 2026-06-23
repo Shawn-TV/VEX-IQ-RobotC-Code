@@ -7,8 +7,8 @@ task main()
 {repeat(forever)
 {
 
-setMotorSpeed(motor1,70*getJoystickValue(ChA));
- setMotorSpeed(motor4,70*getJoystickValue(ChD));
+setMotorSpeed(motor1,getJoystickValue(ChA));
+ setMotorSpeed(motor4,getJoystickValue(ChD));
 
 
 

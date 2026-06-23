@@ -12,7 +12,7 @@ task main()
 
 	while(getMotorEncoder(leftmotor)<2800)
 	{
-		if(getColorValue(color) < 180)
+		if(getColorGrayscale(color) < 180)
 		{
 
 			setMotorSpeed(leftmotor, 0);
@@ -28,7 +28,7 @@ task main()
 
 		while(getMotorEncoder(leftmotor)>=2800)
 	{
-		if(getColorValue(color) < 180)
+		if(getColorGrayscale(color) < 180)
 		{
 
 			setMotorSpeed(leftmotor, 60);

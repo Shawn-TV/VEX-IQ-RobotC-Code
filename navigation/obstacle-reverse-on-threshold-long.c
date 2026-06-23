@@ -1,6 +1,6 @@
-#pragma config(Sensor, port7,  ,               sensorVexIQ_Distance)
+#pragma config(Sensor, port7,  DNear,          sensorVexIQ_Distance)
 #pragma config(Sensor, port9,  D,              sensorVexIQ_Distance)
-#pragma config(Sensor, port11, D,              sensorVexIQ_Distance)
+#pragma config(Sensor, port11, DFar,           sensorVexIQ_Distance)
 #pragma config(Motor,  motor1,          L,             tmotorVexIQ, PIDControl, encoder)
 #pragma config(Motor,  motor3,          G,             tmotorVexIQ, PIDControl, encoder)
 #pragma config(Motor,  motor6,          R,             tmotorVexIQ, PIDControl, reversed, encoder)

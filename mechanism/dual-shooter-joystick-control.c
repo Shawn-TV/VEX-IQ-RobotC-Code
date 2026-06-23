@@ -8,14 +8,14 @@ task main()
 {
 	while(true)
 {if (getJoystickValue(BtnFUp)==1)
-	{setMotorSpeed(QR,260);
- setMotorSpeed(QL,260);}
+	{setMotorSpeed(QR,100);
+ setMotorSpeed(QL,100);}
  else
    {setMotorSpeed(QR,0);
  setMotorSpeed(QL,0);}
 
 	if (getJoystickValue(BtnEUp)==1)
-	{setMotorSpeed(FS,260);}
+	{setMotorSpeed(FS,100);}
 	else
 	  {setMotorSpeed(FS,0);
 	  	}

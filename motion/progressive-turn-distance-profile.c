@@ -5,11 +5,9 @@
 task main()
 {resetMotorEncoder(n);
  resetMotorEncoder(m);
- setMotorTarget(n,360,
-100	);
-	setMotorTarget(m,360,
-100	);
-  waitUntilMotorStop(n)
+ setMotorTarget(n, 360, 100);
+	setMotorTarget(m, 360, 100);
+  waitUntilMotorStop(n);
   waitUntilMotorStop(m);
 resetMotorEncoder(n );
 resetMotorEncoder(m);

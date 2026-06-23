@@ -5,22 +5,25 @@
 
 task main()
 {
-	int d=0;
-	displayTextLine(1,"%d",d)
+	int d = 0;
+	displayTextLine(1, "%d", d);
+
 	repeat(5)
 	{
-	if(getColorGrayscale(C)<180)
-	{setMotorSpeed(L,100)
-		setMotorSpeed(R,100)
-		sleep(10);}
+		if(getColorGrayscale(C) < 180)
+		{
+			setMotorSpeed(L, 100);
+			setMotorSpeed(R, 100);
+			sleep(10);
+		}
 		else
-		{sleep(100);
+		{
+			sleep(100);
 			d++;
-			setMotorSpeed(L,100)
-		setMotorSpeed(R,100)
-		sleep(1000)
-		displayTextLine(1,"%d",d);
+			setMotorSpeed(L, 100);
+			setMotorSpeed(R, 100);
+			sleep(1000);
+			displayTextLine(1, "%d", d);
+		}
 	}
 }
-}
-
