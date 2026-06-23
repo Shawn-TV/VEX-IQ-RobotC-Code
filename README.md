@@ -2,172 +2,130 @@
 
 ## English
 
-This repository is a collection of code I wrote for VEX IQ RobotC.
+This repository collects my VEX IQ RobotC programs, organized by robot behavior so they can be reused for learning, calibration, and competition prototyping.
 
-It is organized by behavior type so each file is easy to find for learning, refactoring, and reuse.
+## What’s in this repository
 
-### How to use
+- `competition/` for contest-style routines
+- `control/` for manual motion control
+- `motion/` for encoder/drive pattern movement
+- `navigation/` for steering, line-following, and obstacle logic
+- `sensors/` for telemetry/counting/debug behavior
+- `feedback/` for LEDs and timed indications
+- `mechanism/` and `misc/` for subsystem or template examples
 
-1. Install RobotC for VEX IQ.
+## How to use
+
+1. Open RobotC for VEX IQ.
 2. Open one `.c` file.
-3. Match the motors and sensors in the code to your wiring and port map.
-4. Upload and test on a VEX IQ brain.
-5. Use the file as a baseline and tune speeds, thresholds, and delays before using it in a match.
+3. Match ports and motor mapping to your actual robot wiring.
+4. Compile and upload to your VEX IQ Brain.
+5. Tune speeds, thresholds, and delays for your specific chassis.
 
-### Detailed file catalog
+## Detailed catalog (English then Chinese per file)
 
-#### control
-- `control/touch-start-stop-winch.c`  
-  Touch sensor at port 7 enables motor on while pressed and stops it when released. It is a start/stop template for winch-like motion, gripper, or lever actuation.
-- `control/joystick-drive-basic.c`  
-  Basic tank-drive mapping with `ChA` and `ChD`, no extra deadband. It is suitable for validating direct joystick to motor response.
-- `control/joystick-drive-button-gear.c`  
-  Button-control movement demo: two buttons turn left/right, one button drives forward, otherwise motors stop. It is a compact manual control mode with discrete behaviors.
+### competition
+- `competition-sweep/championship-sweep-routine.c` — EN: A sequential match-like routine combining forward, turns, and sensor waits using motors and sensors, designed as a reusable sweep template. CN: 比赛式流程示例，包含前进、转向与传感器等待逻辑，适合作为赛事程序框架。
 
-#### feedback
-- `feedback/led-touch-gated-sequence.c`  
-  Waits on LED-touch state and then changes LED color in three gated steps (`red`, `green`, `blue`). Good for event-gated visual-state demos.
-- `feedback/led-cascade-sequence.c`  
-  Time-based LED animation over three ports: red/yellow/green-like sequence with second-level transitions. Useful as simple state indication.
-- `feedback/led-touch-trigger-lightshow.c`  
-  Runs a timed two-LED lightshow after touch input and stays with a fallback blink mode when idle. Useful for user feedback scripts.
+### control
+- `control/touch-start-stop-winch.c` — EN: Uses a touch sensor on port 7 as an emergency start/stop gate: run motor while pressed, stop when released. CN: 触摸按下时运行电机、松开立即停止，适合起停机构。
+- `control/joystick-drive-basic.c` — EN: Direct joystick drive mapping (`ChA`, `ChD`) into left/right motor speed values. CN: 直接使用摇杆通道驱动左右电机，适合验证手柄映射和比例控制。
+- `control/joystick-drive-button-gear.c` — EN: Button-first control layer where different keys map to turn/drive states, with joystick fallback on one key. CN: 按键控制转向与前进，未按键时停机，作为离散挡位手控模板。
 
-#### competition
-- `competition-sweep/championship-sweep-routine.c`  
-  Full loop routine with manual motion stages and sensor-triggered behavior. This is a competition-style sequence you can split into smaller reusable tasks.
+### feedback
+- `feedback/led-touch-gated-sequence.c` — EN: Gated LED sequence (`red -> green -> blue`) controlled by touch-LED state transitions. CN: 基于触摸LED状态推进颜色阶段，演示状态触发反馈。
+- `feedback/led-cascade-sequence.c` — EN: Repeated multi-port LED color cascade with timed transitions for status indication. CN: 多端口渐进式灯效序列，适合显示阶段状态。
+- `feedback/led-touch-trigger-lightshow.c` — EN: Interactive lightshow tied to touch input; otherwise stays in a low-energy standby color state. CN: 触摸触发灯光秀，空闲时进入备用蓝色状态。
 
-#### mechanism
-- `mechanism/dual-shooter-joystick-control.c`  
-  Button-controlled dual shooter + feeder logic: one button drives two motors, another button controls a feeder motor. Suitable for mechanism test and sequencing.
+### mechanism
+- `mechanism/dual-shooter-joystick-control.c` — EN: Button-driven mechanism control: one button runs twin shooter motors, another drives feeder motor. CN: 按键驱动双轮发射+送料，便于单元联调。
 
-#### motion
-- `motion/encoder-repeater-forward.c`  
-  Repeats encoder-based forward motion steps forever. Each cycle resets encoders, sets target rotation, then waits until both stop.
-- `motion/encoder-step-cycle-forward.c`  
-  Same motion pattern as `encoder-repeater-forward.c`, intended as a variant for project-level reuse and quick comparison.
-- `motion/step-and-rotate-encoder-profile.c`  
-  Two-stage asymmetric encoder profile: first one direction gets longer command, then roles swap. Useful for checking drift, lag, and asymmetry.
-- `motion/progressive-turn-distance-profile.c`  
-  Short then long staged turns with different distances and speeds, useful for understanding acceleration-like behavior and heading progress.
+### motion
+- `motion/encoder-loop-forward.c` — EN: Endless encoder loop that repeatedly commands equal targets on both wheels and waits for completion. CN: 无限循环前进里程模板，左右轮同步到达目标值后继续。
+- `motion/encoder-repeater-forward.c` — EN: Similar to loop-forward, wrapped as a repeatable cycle with explicit motor/encoder setup. CN: 重复执行编码器前进的重复版，含驱动和编码器的标准配置。
+- `motion/encoder-step-cycle-forward.c` — EN: Step-based forward cycle using encoder checkpoints and `waitUntil` completion calls. CN: 编码器分段到位前进程序。
+- `motion/eight-shape-pattern.c` — EN: Two-motor target profile that generates alternating distance patterns resembling an “8” path. CN: 通过交替设置左右轮目标脉冲形成“8”形运动轨迹。
+- `motion/step-and-rotate-encoder-profile.c` — EN: Multi-stage encoder sequence with swapped distances on left/right motor roles. CN: 两阶段里程/转向组合，左右轮目标互换以测试对称性。
+- `motion/progressive-turn-distance-profile.c` — EN: Combines short/long turn segments with varying distances and speed to approximate progressive motion shaping. CN: 渐进转向示例，包含短段和长段转向与速度差异。
 
-#### navigation
-- `navigation/gyro-heading-hold.c`  
-  Minimal heading-hold loop: uses gyro angle as target correction and continually issues motor commands. Useful as base for self-correcting steering.
-- `navigation/gyro-compass-direction-lock.c`  
-  Converts gyro angle into direction labels and applies corrective motor target commands by angle sign and magnitude. Combines direction logging and correction behavior.
-- `navigation/line-follow-state-machine.c`  
-  Line following with an encoder checkpoint and two operational phases. Each phase applies opposite correction depending on grayscale threshold.
-- `navigation/line-follow-threshold-state-switch.c`  
-  Similar line follower with a fixed encoder threshold at 2800, then switches to the opposite correction strategy after crossing the checkpoint.
-- `navigation/line-follow-while-threshold.c`  
-  Classic loop style follow logic: while grayscale stays high/low, one side pauses while the other keeps moving, then recover to equal forward speed.
-- `navigation/obstacle-reverse-on-threshold.c`  
-  Keeps going while distance is safe, and reverses when threshold is crossed. Minimal obstacle escape strategy.
-- `navigation/obstacle-reverse-on-threshold-long.c`  
-  Long variant of obstacle recovery with extra distance sensor setup lines, keeping the same forward-reverse behavior.
+### navigation
+- `navigation/gyro-heading-hold.c` — EN: Very compact heading-hold loop using gyro value as motor target correction. CN: 极简航向保持循环，利用陀螺角度修正。
+- `navigation/gyro-compass-direction-lock.c` — EN: Compass-like gyro sector detection plus correction routine, with LED status output per angle region. CN: 根据陀螺角落区分方向，结合颜色LED给出方位提示和纠偏。
+- `navigation/line-follow-state-machine.c` — EN: Two-phase line-following with encoder gate and while-loop state transitions. CN: 带编码器阈值的两阶段循线状态机。
+- `navigation/line-follow-threshold-state-switch.c` — EN: Threshold-based line follow that switches correction behavior after left-motor encoder reaches 2800 counts. CN: 灰度阈值循线，在左轮计数到达2800后切换策略。
+- `navigation/line-follow-while-threshold.c` — EN: While-loop line follower that pivots one side based on grayscale threshold continuously. CN: 纯while方式循线：按阈值让一侧轮子停转并修正。
+- `navigation/obstacle-reverse-on-threshold.c` — EN: Moves forward while distance is safe, reverses on threshold breach. CN: 距离安全前进，触发阈值后后退。
+- `navigation/obstacle-reverse-on-threshold-long.c` — EN: Extended long-horizon obstacle routine with multiple distance sensor declarations for broader compatibility. CN: 加强版障碍处理示例，保留两套距离配置。
 
-#### sensors
-- `sensors/telemetry/color-distance-gyro-bumper-debug.c`  
-  Continuous telemetry print loop for color, distance, gyro, and bumper readings. Useful for calibration and sensor sanity check.
-- `sensors/grayline-counting-by-threshold.c`  
-  Threshold-based counting demo with grayscale transitions while moving. Useful for counting line-crossing-style events.
+### sensors
+- `sensors/telemetry/color-distance-gyro-bumper-debug.c` — EN: Continuous real-time debug stream for color, distance, gyro, and touch values. CN: 实时串屏调试模板，持续打印色值、距离、角速度/角度和触摸值。
+- `sensors/grayline-counting-by-threshold.c` — EN: Threshold-based grayscale counter with repeated runs for line-counting experiments. CN: 灰度阈值计数教学例子，适合计数线段交叉事件。
 
-#### misc
-- `misc/countdown-and-accel-demo.c`  
-  Counter/display experiment code with logic that needs condition adjustment to make the loop runnable. Useful as an exercise in fixing control-flow conditions.
-- `misc/task-micro-demo.c`  
-  Demonstrates RobotC tasks (`task one`, `task two`) and `startTask` scheduling from `task main`.
-- `misc/blank-template.c`  
-  Empty project scaffold for quick starting a new RobotC sketch.
+### misc
+- `misc/blank-template.c` — EN: Empty RobotC scaffold with `task main()` only, intended as a clean starting point. CN: 空白骨架文件，适合快速创建新任务。
+- `misc/countdown-and-accel-demo.c` — EN: Countdown/telemetry-style loop example with counter progression and display output. CN: 倒计时与显示示例。
+- `misc/task-micro-demo.c` — EN: Demonstrates two worker tasks and `startTask` usage from `task main()`. CN: 任务并行结构示例，展示 `task one`, `task two` 与主任务调度。
 
-### License
+## License
 
 This repository is released under the MIT License. See [`LICENSE`](./LICENSE).
 
-
 ## 中文
 
-这是我编写的 VEX IQ RobotC 代码合集，按功能模块分类，便于学习、复用和重构。
+这是我自己的 VEX IQ RobotC 代码合集，按行为模块分类，便于复用、课程演示和竞赛工程拆解。
 
-### 使用方法
+## 使用方式
 
 1. 安装 RobotC for VEX IQ。
 2. 打开任意 `.c` 文件。
-3. 按实际接线修改电机和传感器端口映射。
-4. 下载到 VEX IQ 主控并测试。
-5. 在正式使用前按场景调整速度、阈值和延时参数。
+3. 按实物接线修改端口与电机映射。
+4. 下载到 VEX IQ Brain 后调参。
+5. 通过阈值、速度、延时逐步适配你的机器人。
 
-### 文件详细说明
+## 详细目录（先英文后中文）
 
-#### control（控制）
-- `control/touch-start-stop-winch.c`  
-  触摸按下时使电机持续正转，松开即停止，属于典型的“按住运行”机构控制模板。
-- `control/joystick-drive-basic.c`  
-  双摇杆通道直接控制左右电机，几乎无死区处理，适合验证基础遥控映射。
-- `control/joystick-drive-button-gear.c`  
-  使用按键实现三种行为：左转、右转和前进，未触发时停止。适合做离散按键控制的出发模板。
+### 赛事（competition）
+- `competition-sweep/championship-sweep-routine.c` — EN: A full routine loop combining chassis movement, sensor checks, and task switching, built as a competition-oriented scaffold. CN: 赛事风格完整动作链，包含传感器判断与重复流程，适合作竞赛程序拆解。
 
-#### feedback（反馈）
-- `feedback/led-touch-gated-sequence.c`  
-  以触摸状态为条件切换 LED 颜色（红/绿/蓝）三段序列，适合做事件触发的状态机演示。
-- `feedback/led-cascade-sequence.c`  
-  按固定时序输出级联 LED 动画，适用于状态显示和课程演示。
-- `feedback/led-touch-trigger-lightshow.c`  
-  按触摸传感器进入长短间隔灯光秀，空闲时进入蓝色循环反馈。
+### 控制（control）
+- `control/touch-start-stop-winch.c` — EN: Touch-gated motor start/stop example for lifting or winch-like mechanics. CN: 触摸按钮控制的“按住运行、松开停止”模板。
+- `control/joystick-drive-basic.c` — EN: Direct left-right tank control through joystick channels. CN: 摇杆通道直连左右电机映射示例。
+- `control/joystick-drive-button-gear.c` — EN: Button-mode joystick demo with separate forward/left/right mappings and off state fallback. CN: 按键离散档位控制示例，未输入时默认停止。
 
-#### competition（赛事）
-- `competition-sweep/championship-sweep-routine.c`  
-  赛题风格循环动作流程，包含前进、转向与传感器触发动作。适合拆解后重组比赛任务。
+### 反馈（feedback）
+- `feedback/led-touch-gated-sequence.c` — EN: Touch-sensitive LED step sequence, useful for event-driven state displays. CN: 触发式的LED颜色状态序列。
+- `feedback/led-cascade-sequence.c` — EN: Time-based cascade animation across three LED outputs. CN: 三路LED级联、计时切换的显示效果。
+- `feedback/led-touch-trigger-lightshow.c` — EN: Touch start enters light animation, otherwise stays in standby. CN: 触摸启动的灯光秀，空闲时退回常态。
 
-#### mechanism（机构）
-- `mechanism/dual-shooter-joystick-control.c`  
-  双按键控制双主炮 + 送料电机（示例中的 `BtnFUp` 与 `BtnEUp`）。用于机构联动与启动节奏测试。
+### 机构（mechanism）
+- `mechanism/dual-shooter-joystick-control.c` — EN: Joystick-button control for dual shooter + feeder subsystem. CN: 双主炮与送料组件的按键联动示例。
 
-#### motion（运动）
-- `motion/encoder-repeater-forward.c`  
-  无限循环编码器前进示例，每次复位后设置目标并等待完成。
-- `motion/encoder-step-cycle-forward.c`  
-  与上一个逻辑一致的运动模板，作为同类项目的对照版本。
-- `motion/step-and-rotate-encoder-profile.c`  
-  两段式不对称角度控制，先一边长行程再换向后互换，适合测试动力差异。
-- `motion/progressive-turn-distance-profile.c`  
-  先短距离同步转向，后大距离非对称转向，适合观察速度和距离参数对转向曲线的影响。
+### 运动（motion）
+- `motion/encoder-loop-forward.c` — EN: Repeatable encoder loop for stable forward distance control. CN: 无限循环的编码器前进基线。
+- `motion/encoder-repeater-forward.c` — EN: Repeater pattern that resets each cycle and uses encoder targets. CN: 每轮重置/前进的重复式编码器程序。
+- `motion/encoder-step-cycle-forward.c` — EN: Step-cycle motion variant using both motor targets and encoder waits. CN: 里程分步的编码器推进版本。
+- `motion/eight-shape-pattern.c` — EN: Motor profile intended to reproduce an “8” movement shape. CN: 通过两轮目标脉冲构成8字路径。
+- `motion/step-and-rotate-encoder-profile.c` — EN: Two asymmetrical steps with motor role swap for turning and direction comparison. CN: 两段式转动与速度对比。
+- `motion/progressive-turn-distance-profile.c` — EN: Progressive forward/turn sequence with distance and speed progression. CN: 多级距离与速度递进转向。
 
-#### navigation（导航）
-- `navigation/gyro-heading-hold.c`  
-  最简航向保持：以陀螺角度作为目标修正，持续输出修正指令。
-- `navigation/gyro-compass-direction-lock.c`  
-  角度分区显示方向标签，并基于正负角度进行纠偏。适合方向校正教学。
-- `navigation/line-follow-state-machine.c`  
-  里程阈值触发阶段切换的循线逻辑，不同阶段采用不同转向策略。
-- `navigation/line-follow-threshold-state-switch.c`  
-  以 2800 编码器计数为相位切点，按灰度阈值切换转向方向。
-- `navigation/line-follow-while-threshold.c`  
-  基础循线 while 风格：按阈值让一侧停转修正，其他侧继续前进。
-- `navigation/obstacle-reverse-on-threshold.c`  
-  距离安全时前进，越界后执行后退动作，属于避障行为的最小单元。
-- `navigation/obstacle-reverse-on-threshold-long.c`  
-  长周期版本，保留同样逻辑并加入更多距离测量配置，方便对比传感器配置。
+### 导航（navigation）
+- `navigation/gyro-heading-hold.c` — EN: Minimal heading hold loop. CN: 最小化航向保持实现。
+- `navigation/gyro-compass-direction-lock.c` — EN: Region-based gyro direction lock with correction and LED output. CN: 按角度区间进行方位显示与纠偏控制。
+- `navigation/line-follow-state-machine.c` — EN: Stateful line-follow demo switching phases by encoder threshold. CN: 以编码器相位切换的循线状态机。
+- `navigation/line-follow-threshold-state-switch.c` — EN: Fixed-threshold state switch version of line following, with phase crossing at 2800 counts. CN: 编码器达到2800后切换循线策略。
+- `navigation/line-follow-while-threshold.c` — EN: Continuous while-loop line correction by grayscale comparison. CN: while循环永动的阈值循线控制。
+- `navigation/obstacle-reverse-on-threshold.c` — EN: Distance threshold safety gate with forward/reverse fallback. CN: 基本避障反向回退。
+- `navigation/obstacle-reverse-on-threshold-long.c` — EN: Long-threshold variant with extra distance configuration lines for robustness. CN: 长循环障碍示例，保留多个距离配置。
 
-#### sensors（传感）
-- `sensors/telemetry/color-distance-gyro-bumper-debug.c`  
-  实时打印色彩、距离、陀螺仪和按钮输入的串屏调试示例。
-- `sensors/grayline-counting-by-threshold.c`  
-  灰度阈值触发计数示例，适合训练阈值分割与事件计数。
+### 传感（sensors）
+- `sensors/telemetry/color-distance-gyro-bumper-debug.c` — EN: Real-time telemetry printer for four sensor channels. CN: 四通道传感器实时调试显示。
+- `sensors/grayline-counting-by-threshold.c` — EN: Threshold crossing counter sample for line counting and repeat loops. CN: 灰度阈值事件计数演示。
 
-#### misc（其他）
-- `misc/countdown-and-accel-demo.c`  
-  计数与显示实验草稿，当前主循环条件需要修正才会完整执行，适合作为修复练习。
-- `misc/task-micro-demo.c`  
-  任务并发示例：定义多个 task 并通过 `startTask` 调度。
-- `misc/blank-template.c`  
-  纯空白脚手架，适合快速起一个新实验。
+### 其他（misc）
+- `misc/blank-template.c` — EN: Blank template project skeleton. CN: 空白RobotC模板。
+- `misc/countdown-and-accel-demo.c` — EN: Counter and update example with timing prints and loop control. CN: 计数与显示逻辑示例。
+- `misc/task-micro-demo.c` — EN: Demonstrates `startTask` and concurrent task style in RobotC. CN: 任务并发模型示例。
 
-### 开源许可
+## 开源许可
 
-本仓库使用 MIT 协议。详见 [`LICENSE`](./LICENSE)。
-
-
-### Local files not yet in repository (mapped to current naming)
-- `vexiq_drive_encoder_loop.c` -> `motion/encoder-loop-forward.c`
-- `vexiq_drive_eight_shape_pattern.c` -> `motion/eight-shape-pattern.c`
+本仓库使用 MIT 协议，详见 [`LICENSE`](./LICENSE)。
