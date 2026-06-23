@@ -4,81 +4,81 @@
 
 This repository is a collection of code I wrote for VEX IQ RobotC.
 
-It contains practical control demos and competition-style routines for robot modules such as drivetrain, navigation, sensing, mechanism control, and feedback behavior.
+It is organized by behavior type so each file is easy to find for learning, refactoring, and reuse.
 
 ### How to use
 
 1. Install RobotC for VEX IQ.
-2. Open any `.c` file in RobotC.
-3. Configure motors and sensors in the code to match your wiring and ports.
-4. Download the file to the VEX IQ brain and run it in the same way you normally test your robot.
-5. For each routine, copy one file into a clean RobotC project if needed, then calibrate constants/tuning values before competition use.
+2. Open one `.c` file.
+3. Match the motors and sensors in the code to your wiring and port map.
+4. Upload and test on a VEX IQ brain.
+5. Use the file as a baseline and tune speeds, thresholds, and delays before using it in a match.
 
-### How these files are organized
+### Detailed file catalog
 
 #### control
 - `control/touch-start-stop-winch.c`  
-  Touch sensor start/stop control logic for a winch-style mechanism.
+  Touch sensor at port 7 enables motor on while pressed and stops it when released. It is a start/stop template for winch-like motion, gripper, or lever actuation.
 - `control/joystick-drive-basic.c`  
-  Basic joystick robot movement template.
+  Basic tank-drive mapping with `ChA` and `ChD`, no extra deadband. It is suitable for validating direct joystick to motor response.
 - `control/joystick-drive-button-gear.c`  
-  Button-based gear switching logic for joystick drive.
+  Button-control movement demo: two buttons turn left/right, one button drives forward, otherwise motors stop. It is a compact manual control mode with discrete behaviors.
 
 #### feedback
 - `feedback/led-touch-gated-sequence.c`  
-  LED light sequence controlled by touch input.
+  Waits on LED-touch state and then changes LED color in three gated steps (`red`, `green`, `blue`). Good for event-gated visual-state demos.
 - `feedback/led-cascade-sequence.c`  
-  Sequential LED animation routine.
+  Time-based LED animation over three ports: red/yellow/green-like sequence with second-level transitions. Useful as simple state indication.
 - `feedback/led-touch-trigger-lightshow.c`  
-  Event-triggered light show behavior.
+  Runs a timed two-LED lightshow after touch input and stays with a fallback blink mode when idle. Useful for user feedback scripts.
 
 #### competition
 - `competition-sweep/championship-sweep-routine.c`  
-  Competition-oriented sweeping and match-style task routine.
+  Full loop routine with manual motion stages and sensor-triggered behavior. This is a competition-style sequence you can split into smaller reusable tasks.
 
 #### mechanism
 - `mechanism/dual-shooter-joystick-control.c`  
-  Dual-shooter actuator control from joystick input.
+  Button-controlled dual shooter + feeder logic: one button drives two motors, another button controls a feeder motor. Suitable for mechanism test and sequencing.
 
 #### motion
-- `motion/progressive-turn-distance-profile.c`  
-  Distance-based progressive turn control.
 - `motion/encoder-repeater-forward.c`  
-  Repeated forward motion using encoder signals.
-- `motion/step-and-rotate-encoder-profile.c`  
-  Step-and-rotate profile with encoder feedback.
+  Repeats encoder-based forward motion steps forever. Each cycle resets encoders, sets target rotation, then waits until both stop.
 - `motion/encoder-step-cycle-forward.c`  
-  Forward stepping cycle driven by encoder logic.
+  Same motion pattern as `encoder-repeater-forward.c`, intended as a variant for project-level reuse and quick comparison.
+- `motion/step-and-rotate-encoder-profile.c`  
+  Two-stage asymmetric encoder profile: first one direction gets longer command, then roles swap. Useful for checking drift, lag, and asymmetry.
+- `motion/progressive-turn-distance-profile.c`  
+  Short then long staged turns with different distances and speeds, useful for understanding acceleration-like behavior and heading progress.
 
 #### navigation
 - `navigation/gyro-heading-hold.c`  
-  Gyro-based heading-hold behavior.
+  Minimal heading-hold loop: uses gyro angle as target correction and continually issues motor commands. Useful as base for self-correcting steering.
 - `navigation/gyro-compass-direction-lock.c`  
-  Direction lock with compass/heading control.
+  Converts gyro angle into direction labels and applies corrective motor target commands by angle sign and magnitude. Combines direction logging and correction behavior.
 - `navigation/line-follow-state-machine.c`  
-  State-machine style line following.
+  Line following with an encoder checkpoint and two operational phases. Each phase applies opposite correction depending on grayscale threshold.
 - `navigation/line-follow-threshold-state-switch.c`  
-  Threshold-based state switching for line following.
+  Similar line follower with a fixed encoder threshold at 2800, then switches to the opposite correction strategy after crossing the checkpoint.
 - `navigation/line-follow-while-threshold.c`  
-  Line tracking with threshold detection.
+  Classic loop style follow logic: while grayscale stays high/low, one side pauses while the other keeps moving, then recover to equal forward speed.
 - `navigation/obstacle-reverse-on-threshold.c`  
-  Obstacle reaction with reverse action on trigger.
+  Keeps going while distance is safe, and reverses when threshold is crossed. Minimal obstacle escape strategy.
 - `navigation/obstacle-reverse-on-threshold-long.c`  
-  Long-distance variant of obstacle reverse behavior.
+  Long variant of obstacle recovery with extra distance sensor setup lines, keeping the same forward-reverse behavior.
 
 #### sensors
 - `sensors/telemetry/color-distance-gyro-bumper-debug.c`  
-  Telemetry debug example combining color, distance, gyro, and bumper inputs.
+  Continuous telemetry print loop for color, distance, gyro, and bumper readings. Useful for calibration and sensor sanity check.
 - `sensors/grayline-counting-by-threshold.c`  
-  Gray line counting using threshold logic.
+  Threshold-based counting demo with grayscale transitions while moving. Useful for counting line-crossing-style events.
 
 #### misc
 - `misc/countdown-and-accel-demo.c`  
-  Countdown and acceleration demonstration.
+  Counter/display experiment code with logic that needs condition adjustment to make the loop runnable. Useful as an exercise in fixing control-flow conditions.
 - `misc/task-micro-demo.c`  
-  Task micro-structure example for RobotC tasks.
+  Demonstrates RobotC tasks (`task one`, `task two`) and `startTask` scheduling from `task main`.
 - `misc/blank-template.c`  
-  Clean template to create new RobotC tasks quickly.
+  Empty project scaffold for quick starting a new RobotC sketch.
 
 ### License
 
@@ -92,87 +92,86 @@ All code in this repository is my own and for learning, practice, and competitio
 
 ## 中文
 
-这是我编写的 VEX IQ RobotC 代码合集，按功能模块分类。
-
-内容覆盖了底盘控制、导航、传感器调试、机构控制、反馈输出以及比赛任务行为等常见场景，可直接用于教学演示、竞赛预演和复盘调参。
+这是我编写的 VEX IQ RobotC 代码合集，按功能模块分类，便于学习、复用和重构。
 
 ### 使用方法
 
-1. 安装 RobotC for VEX IQ 并打开 `.c` 文件。
-2. 按实际接线将电机/传感器端口映射到代码中的配置项。
-3. 将程序下载到 VEX IQ 机器人主控并运行。
-4. 每个任务建议先在空场地测试，再根据实物参数调节阈值、速度和时间常量。
+1. 安装 RobotC for VEX IQ。
+2. 打开任意 `.c` 文件。
+3. 按实际接线修改电机和传感器端口映射。
+4. 下载到 VEX IQ 主控并测试。
+5. 在正式使用前按场景调整速度、阈值和延时参数。
 
-### 文件归类与作用
+### 文件详细说明
 
 #### control（控制）
 - `control/touch-start-stop-winch.c`  
-  用触摸传感器控制卷线/升降机构的启停逻辑。
+  触摸按下时使电机持续正转，松开即停止，属于典型的“按住运行”机构控制模板。
 - `control/joystick-drive-basic.c`  
-  基础摇杆底盘控制示例。
+  双摇杆通道直接控制左右电机，几乎无死区处理，适合验证基础遥控映射。
 - `control/joystick-drive-button-gear.c`  
-  摇杆驱动加按键换挡逻辑。
+  使用按键实现三种行为：左转、右转和前进，未触发时停止。适合做离散按键控制的出发模板。
 
 #### feedback（反馈）
 - `feedback/led-touch-gated-sequence.c`  
-  触摸触发的 LED 序列控制。
+  以触摸状态为条件切换 LED 颜色（红/绿/蓝）三段序列，适合做事件触发的状态机演示。
 - `feedback/led-cascade-sequence.c`  
-  阶梯式 LED 灯效。
+  按固定时序输出级联 LED 动画，适用于状态显示和课程演示。
 - `feedback/led-touch-trigger-lightshow.c`  
-  触发式灯光秀行为。
+  按触摸传感器进入长短间隔灯光秀，空闲时进入蓝色循环反馈。
 
 #### competition（赛事）
 - `competition-sweep/championship-sweep-routine.c`  
-  赛场扫描/扫荡任务动作流程。
+  赛题风格循环动作流程，包含前进、转向与传感器触发动作。适合拆解后重组比赛任务。
 
 #### mechanism（机构）
 - `mechanism/dual-shooter-joystick-control.c`  
-  使用摇杆控制双发射机构。
+  双按键控制双主炮 + 送料电机（示例中的 `BtnFUp` 与 `BtnEUp`）。用于机构联动与启动节奏测试。
 
 #### motion（运动）
-- `motion/progressive-turn-distance-profile.c`  
-  距离驱动的渐进转向控制。
 - `motion/encoder-repeater-forward.c`  
-  编码器步进正向重复动作。
-- `motion/step-and-rotate-encoder-profile.c`  
-  编码器反馈的转向+步进流程。
+  无限循环编码器前进示例，每次复位后设置目标并等待完成。
 - `motion/encoder-step-cycle-forward.c`  
-  编码器步进的前进循环动作。
+  与上一个逻辑一致的运动模板，作为同类项目的对照版本。
+- `motion/step-and-rotate-encoder-profile.c`  
+  两段式不对称角度控制，先一边长行程再换向后互换，适合测试动力差异。
+- `motion/progressive-turn-distance-profile.c`  
+  先短距离同步转向，后大距离非对称转向，适合观察速度和距离参数对转向曲线的影响。
 
 #### navigation（导航）
 - `navigation/gyro-heading-hold.c`  
-  陀螺仪航向保持。
+  最简航向保持：以陀螺角度作为目标修正，持续输出修正指令。
 - `navigation/gyro-compass-direction-lock.c`  
-  陀螺仪/指南针方向锁定。
+  角度分区显示方向标签，并基于正负角度进行纠偏。适合方向校正教学。
 - `navigation/line-follow-state-machine.c`  
-  状态机版本的循线控制。
+  里程阈值触发阶段切换的循线逻辑，不同阶段采用不同转向策略。
 - `navigation/line-follow-threshold-state-switch.c`  
-  阈值切换驱动的循线逻辑。
+  以 2800 编码器计数为相位切点，按灰度阈值切换转向方向。
 - `navigation/line-follow-while-threshold.c`  
-  阈值循线行为。
+  基础循线 while 风格：按阈值让一侧停转修正，其他侧继续前进。
 - `navigation/obstacle-reverse-on-threshold.c`  
-  遇阻阈值后触发倒退策略。
+  距离安全时前进，越界后执行后退动作，属于避障行为的最小单元。
 - `navigation/obstacle-reverse-on-threshold-long.c`  
-  更长距离版的避障倒退。
+  长周期版本，保留同样逻辑并加入更多距离测量配置，方便对比传感器配置。
 
 #### sensors（传感）
 - `sensors/telemetry/color-distance-gyro-bumper-debug.c`  
-  色彩/距离/陀螺仪/碰撞传感器联合调试输出示例。
+  实时打印色彩、距离、陀螺仪和按钮输入的串屏调试示例。
 - `sensors/grayline-counting-by-threshold.c`  
-  灰线计数与阈值触发示例。
+  灰度阈值触发计数示例，适合训练阈值分割与事件计数。
 
 #### misc（其他）
 - `misc/countdown-and-accel-demo.c`  
-  倒计时与加速示例。
+  计数与显示实验草稿，当前主循环条件需要修正才会完整执行，适合作为修复练习。
 - `misc/task-micro-demo.c`  
-  RobotC 任务(Task)的微观流程示例。
+  任务并发示例：定义多个 task 并通过 `startTask` 调度。
 - `misc/blank-template.c`  
-  空白模板，适合快速搭新项目。
+  纯空白脚手架，适合快速起一个新实验。
 
 ### 开源许可
 
-仓库使用 MIT 协议，详见 [`LICENSE`](./LICENSE)。
+本仓库使用 MIT 协议。详见 [`LICENSE`](./LICENSE)。
 
 ### 作者说明
 
-仓库中的代码均为本人编写，供学习、课程实践和机器人比赛原型开发。
+本仓库全部代码为本人编写，用于学习、课程实践和比赛原型开发。
