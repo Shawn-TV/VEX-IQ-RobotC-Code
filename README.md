@@ -2,7 +2,7 @@
 
 ## English
 
-This repository is a collection of my personal VEX IQ RobotC programs.
+This repository is a collection of code I wrote for VEX IQ RobotC.
 
 It contains practical control demos and competition-style routines for robot modules such as drivetrain, navigation, sensing, mechanism control, and feedback behavior.
 
@@ -92,7 +92,7 @@ All code in this repository is my own and for learning, practice, and competitio
 
 ## 中文
 
-本仓库是我个人整理的 VEX IQ RobotC 代码合集，按功能模块分类。
+这是我编写的 VEX IQ RobotC 代码合集，按功能模块分类。
 
 内容覆盖了底盘控制、导航、传感器调试、机构控制、反馈输出以及比赛任务行为等常见场景，可直接用于教学演示、竞赛预演和复盘调参。
 
