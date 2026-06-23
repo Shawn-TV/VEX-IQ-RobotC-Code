@@ -58,6 +58,7 @@ This repository collects my VEX IQ RobotC programs, organized by robot behavior 
 - `navigation/obstacle-reverse-on-threshold-long.c` — EN: Extended long-horizon obstacle routine with multiple distance sensor declarations for broader compatibility. CN: 加强版障碍处理示例，保留两套距离配置。
 
 ### sensors
+- `sensors/sensor-multi-read-debug.c` — EN: Multi-channel sensor debug loop printing grayscale, distance, gyro, and touch values continuously. CN: 多传感器实时调试示例，持续打印灰度、距离、陀螺和触摸值。
 - `sensors/telemetry/color-distance-gyro-bumper-debug.c` — EN: Continuous real-time debug stream for color, distance, gyro, and touch values. CN: 实时串屏调试模板，持续打印色值、距离、角速度/角度和触摸值。
 - `sensors/grayline-counting-by-threshold.c` — EN: Threshold-based grayscale counter with repeated runs for line-counting experiments. CN: 灰度阈值计数教学例子，适合计数线段交叉事件。
 
@@ -118,6 +119,7 @@ This repository is released under the MIT License. See [`LICENSE`](./LICENSE).
 - `navigation/obstacle-reverse-on-threshold-long.c` — EN: Long-threshold variant with extra distance configuration lines for robustness. CN: 长循环障碍示例，保留多个距离配置。
 
 ### 传感（sensors）
+- `sensors/sensor-multi-read-debug.c` — EN: Continuous debug stream for grayscale, distance, gyro, and touch channels using a simple repeat loop. CN: 简单的多传感器连续调试循环，按行显示灰度、距离、陀螺与触摸数值。
 - `sensors/telemetry/color-distance-gyro-bumper-debug.c` — EN: Real-time telemetry printer for four sensor channels. CN: 四通道传感器实时调试显示。
 - `sensors/grayline-counting-by-threshold.c` — EN: Threshold crossing counter sample for line counting and repeat loops. CN: 灰度阈值事件计数演示。
 
