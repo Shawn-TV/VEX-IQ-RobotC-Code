@@ -1,5 +1,7 @@
 # VEX-IQ-RobotC-Code
 
+中文说明在后面：[点击跳到中文部分](#中文)。
+
 ## English
 
 This repository collects VEX IQ RobotC programs I wrote while testing drive control, encoders, sensors, LEDs, and simple competition-style routines.
